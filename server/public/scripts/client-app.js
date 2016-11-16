@@ -12,6 +12,7 @@ function getBooks() {
     type: 'GET',
     url: '/books',
     success: function(books) {
+      console.log(books);
       appendBooks(books);
     },
     error: function() {
@@ -31,6 +32,7 @@ function postBook() {
   $.each($('#book-form').serializeArray(), function (i, field) {
         book[field.name] = field.value;
       });
+  $('.form-control').val('');
 
   console.log('book: ', book);
 
@@ -39,6 +41,8 @@ function postBook() {
     url: '/books',
     data: book,
     success: function(response) {
+
+      console.log(book);
       getBooks();
     },
     error: function() {
@@ -49,7 +53,7 @@ function postBook() {
 }
 
 function appendBooks(books) {
-  $("#books-list").empty();
+  $("#book-list").empty();
 
   for (var i = 0; i < books.length; i++) {
     $("#book-list").append('<div class="row book"></div>');
@@ -58,5 +62,7 @@ function appendBooks(books) {
     $el.append('<p> ' + books[i].author + '</p>');
     $el.append('<p> ' + books[i].genre + '</p>');
     $el.append('<p> ' + books[i].published + '</p>');
+    $el.append('<p>' + books[i].edition + '</p>');
+    $el.append('<p>' + books[i].publisher + '</p>');
   }
 }
